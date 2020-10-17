@@ -1,17 +1,24 @@
-# Compiled class file
+
+out
+build
 *.class
 
-# Log file
+# Log files
 *.log
 
-# BlueJ files
-*.ctxt
+# Package files
+*.jar
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Maven
+target/
+dist/
+
+# JetBrains IDE
+.idea/
+*.iml
+*.iml
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
