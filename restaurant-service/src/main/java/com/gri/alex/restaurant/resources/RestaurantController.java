@@ -73,7 +73,7 @@ public class RestaurantController {
      * @return A non-null, non-empty collection of restaurants.
      */
     @RequestMapping(value = "/{restaurant_id}", method = RequestMethod.GET)
-    public ResponseEntity<Entity> findById(@PathVariable("restaurant_id") String id) throws Exception {
+    public ResponseEntity<Entity<String>> findById(@PathVariable("restaurant_id") String id) throws Exception {
         logger.info(String.format("restaurant-service findById() invoked:%s for %s ",
                 restaurantService.getClass().getName(), id));
         id = id.trim();
