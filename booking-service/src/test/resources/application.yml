@@ -1,0 +1,12 @@
+# Spring properties
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    com.gri.alex: DEBUG
+    org.hibernate: ERROR
+
+spring:
+  output:
+    ansi:
+      enabled: DETECT

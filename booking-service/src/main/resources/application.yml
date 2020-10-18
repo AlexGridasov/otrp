@@ -4,6 +4,16 @@ spring:
     name: booking-service  # Service registers under this name
   messages:
     fallback-to-system-locale: false
+  output:
+    ansi:
+      enabled: DETECT
+
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    com.gri.alex: DEBUG
+    org.hibernate: ERROR
 
 # HTTP Server
 server:

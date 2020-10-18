@@ -36,7 +36,7 @@ public class InMemBookingRepository implements BookingRepository<Booking, String
     @Override
     public boolean containsName(String name) {
         try {
-            return !this.findByName(name).isEmpty();
+            return !findByName(name).isEmpty();
         } catch (BookingNotFoundException ex) {
             return false;
         } catch (Exception ex) {
