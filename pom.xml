@@ -14,19 +14,16 @@
     <artifactId>otrp</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <name>online-table-reservation</name>
 
     <modules>
-        <module>restaurant-service</module>
-        <module>user-service</module>
         <module>booking-service</module>
+<!--        <module>restaurant-service</module>-->
+<!--        <module>user-service</module>-->
     </modules>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <build>
