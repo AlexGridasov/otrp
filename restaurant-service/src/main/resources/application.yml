@@ -1,0 +1,11 @@
+# Spring properties
+spring:
+  application:
+    name: restaurant-service  # Service registers under this name
+  messages:
+    fallback-to-system-locale: false
+
+# HTTP Server
+server:
+  port: 2222   # HTTP (Tomcat) port
+
