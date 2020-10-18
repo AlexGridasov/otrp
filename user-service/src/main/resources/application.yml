@@ -1,0 +1,10 @@
+# Spring properties
+spring:
+  application:
+    name: user-service  # Service registers under this name
+  messages:
+    fallback-to-system-locale: false
+
+# HTTP Server
+server:
+  port: 2224   # HTTP (Tomcat) port
