@@ -18,7 +18,7 @@
 
     <modules>
         <module>booking-service</module>
-<!--        <module>restaurant-service</module>-->
+        <module>restaurant-service</module>
 <!--        <module>user-service</module>-->
     </modules>
 
