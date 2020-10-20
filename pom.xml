@@ -24,6 +24,9 @@
 
     <properties>
         <java.version>11</java.version>
+
+        <docker.host.address>localhost</docker.host.address>
+        <docker.port>8080</docker.port>
     </properties>
 
     <build>
@@ -44,6 +47,43 @@
                     <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludedGroups>DockerIT</excludedGroups>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <groups>DockerIT</groups>
+                            <systemPropertyVariables>
+                                <service.url>http://${docker.host.address}:${docker.port}/</service.url>
+                            </systemPropertyVariables>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
