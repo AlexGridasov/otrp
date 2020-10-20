@@ -108,7 +108,7 @@
                                             <http>
                                                 <url>http://${docker.host.address}:${docker.port}/v1/booking/1</url>
                                             </http>
-                                            <time>10000</time>
+                                            <time>5000</time>
                                         </wait>
                                         <log>
                                             <prefix>${project.artifactId}</prefix>
