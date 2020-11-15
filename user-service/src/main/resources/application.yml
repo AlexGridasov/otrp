@@ -15,6 +15,11 @@ app:
   greet:
     msg: Hello Microservice!
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
 
 # Discovery Server Access
 eureka:
