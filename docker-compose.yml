@@ -14,6 +14,9 @@ services:
     image: localhost:5000/alex/restaurant-service:1.0-SNAPSHOT
     ports:
       - "8080:8080"
+    links:
+      - eureka
+      - config
 
   booking-service:
     image: localhost:5000/alex/booking-service:1.0-SNAPSHOT
