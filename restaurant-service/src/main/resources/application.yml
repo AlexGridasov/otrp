@@ -7,9 +7,10 @@ spring:
 
 # HTTP Server
 server:
-  port: 2222   # HTTP (Tomcat) port
+  port: 2080   # HTTP (Tomcat) port
 
 ---
+
 # For deployment in Docker containers
 spring:
   profiles: docker

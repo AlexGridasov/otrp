@@ -17,9 +17,10 @@ logging:
 
 # HTTP Server
 server:
-  port: 2223   # HTTP (Tomcat) port
+  port: 2081   # HTTP (Tomcat) port
 
 ---
+
 # For deployment in Docker containers
 spring:
   profiles: docker

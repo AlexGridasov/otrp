@@ -22,6 +22,7 @@ eureka:
     enableSelfPreservation: false
 
 ---
+
 # For deployment in Docker containers
 spring:
   profiles: docker

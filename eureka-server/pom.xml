@@ -14,7 +14,8 @@
     <artifactId>eureka-server</artifactId>
 
     <properties>
-        <start-class>com.packtpub.mmj.eureka.service.EurekaApp</start-class>
+        <start-class>com.gri.alex.eureka.service.EurekaApp</start-class>
+
         <docker.registry.name>localhost:5000/</docker.registry.name>
         <docker.repository.name>${docker.registry.name}alex/${project.artifactId}
         </docker.repository.name>

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  eureka:
+    image: localhost:5000/alex/eureka-server:1.0-SNAPSHOT
+    ports:
+      - "8761:8761"
+
+  config:
+    image: localhost:5000/alex/config-server:1.0-SNAPSHOT
+    ports:
+      - "8888:8888"
+
+  restaurant-service:
+    image: localhost:5000/alex/restaurant-service:1.0-SNAPSHOT
+    ports:
+      - "8080:8080"
+
+  booking-service:
+    image: localhost:5000/alex/booking-service:1.0-SNAPSHOT
+    ports:
+      - "8081:8080"
+
+  user-service:
+    image: localhost:5000/alex/user-service:1.0-SNAPSHOT
+    restart: on-failure
+    ports:
+      - "8082:8080"
+    depends_on:
+      - eureka
+      - config
