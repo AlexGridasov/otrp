@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -10,53 +11,35 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>booking-service</artifactId>
-    <name>booking-service</name>
+    <artifactId>config-server</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
-        <start-class>com.gri.alex.booking.BookingApp</start-class>
-
+        <start-class>com.gri.alex.config.service.ConfigApp</start-class>
         <docker.registry.name>localhost:5000/</docker.registry.name>
-        <docker.repository.name>${docker.registry.name}alex/${project.artifactId}</docker.repository.name>
+        <docker.repository.name>${docker.registry.name}alex/${project.artifactId}
+        </docker.repository.name>
         <docker.host.address>localhost</docker.host.address>
-        <docker.port>8080</docker.port>
+        <docker.port>8888</docker.port>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
 
@@ -85,7 +68,7 @@
                                             <port>${docker.port}</port>
                                         </ports>
                                         <cmd>
-                                            <shell>java -Dspring.profiles.active="docker" -jar \
+                                            <shell>java -Dspring.profiles.active="jdbc, docker" -jar \
                                                 /maven/${project.build.finalName}.jar server \
                                                 /maven/docker-config.yml
                                             </shell>
@@ -94,11 +77,11 @@
                                     <run>
                                         <namingStrategy>alias</namingStrategy>
                                         <ports>
-                                            <port>${docker.port}:8080</port>
+                                            <port>${docker.port}:8888</port>
                                         </ports>
                                         <wait>
                                             <http>
-                                                <url>http://${docker.host.address}:${docker.port}/v1/booking/1</url>
+                                                <url>http://${docker.host.address}:${docker.port}</url>
                                             </http>
                                             <time>5000</time>
                                         </wait>
@@ -110,31 +93,9 @@
                                 </image>
                             </images>
                         </configuration>
-                        <!-- Connect start/stop to pre- and
-                             post-integration-test phase, respectively if you want to start
-                             your docker containers during integration tests -->
-                        <executions>
-                            <execution>
-                               <id>start</id>
-                               <phase>pre-integration-test</phase>
-                               <goals>
-                                 <!-- "build" should be used to create the images with the artifact -->
-                                   <goal>build</goal>
-                                 <goal>start</goal>
-                               </goals>
-                            </execution>
-                            <execution>
-                               <id>stop</id>
-                               <phase>post-integration-test</phase>
-                               <goals>
-                                 <goal>stop</goal>
-                              </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-
 </project>

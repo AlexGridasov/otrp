@@ -1,12 +1,9 @@
-# Spring properties
-logging:
-  level:
-    root: ERROR
-    org.springframework.web: ERROR
-    com.gri.alex: DEBUG
-    org.hibernate: ERROR
+app:
+  greet:
+    msg: Hello Microservice!
 
+# Spring properties
 spring:
-  output:
-    ansi:
-      enabled: DETECT
+  cloud:
+    discovery:
+      enabled: false
