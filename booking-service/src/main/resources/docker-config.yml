@@ -1,6 +1,6 @@
 FROM openjdk:11-jre
 MAINTAINER alex
-EXPOSE 8081
+EXPOSE 8080
 COPY maven /maven/
 CMD java -Dspring.profiles.active="docker" -jar \
 /maven/booking-service.jar server \

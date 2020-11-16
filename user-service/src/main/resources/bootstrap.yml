@@ -1,0 +1,23 @@
+
+---
+# Spring properties
+spring:
+  profiles: jdbc
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: false
+      label: master
+
+---
+
+# For deployment in Docker containers
+spring:
+  profiles: docker
+  aop:
+    auto: false
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true
+
