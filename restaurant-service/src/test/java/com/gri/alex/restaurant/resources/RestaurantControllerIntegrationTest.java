@@ -28,10 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT,
-        properties = {"management.server.port=0", "management.context-path=/admin"})
-public class RestaurantControllerIntegrationTest extends
-        AbstractRestaurantControllerTest {
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class RestaurantControllerIntegrationTest extends AbstractRestaurantControllerTest {
 
     //Required to Generate JSON content from Java objects
     public static final ObjectMapper objectMapper = new ObjectMapper();

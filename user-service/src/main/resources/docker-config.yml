@@ -3,5 +3,5 @@ MAINTAINER alex
 EXPOSE 8080
 COPY maven /maven/
 CMD java -Dspring.profiles.active="docker" -jar \
-/maven/booking-service.jar server \
+/maven/user-service.jar server \
 /maven/docker-config.yml

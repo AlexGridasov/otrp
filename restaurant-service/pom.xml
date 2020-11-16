@@ -13,9 +13,18 @@
 
     <properties>
         <start-class>com.gri.alex.restaurant.RestaurantApp</start-class>
+
+        <docker.registry.name>localhost:5000/</docker.registry.name>
+        <docker.repository.name>${docker.registry.name}alex/${project.artifactId}</docker.repository.name>
+        <docker.host.address>localhost</docker.host.address>
+        <docker.port>8080</docker.port>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -24,13 +33,84 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.34.1</version>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <images>
+                                <image>
+                                    <name>${docker.repository.name}:${project.version}</name>
+                                    <alias>${project.artifactId}</alias>
+                                    <build>
+                                        <from>openjdk:11-jre</from>
+                                        <maintainer>alex</maintainer>
+                                        <assembly>
+                                            <descriptor>docker-assembly.xml</descriptor>
+                                        </assembly>
+                                        <ports>
+                                            <port>${docker.port}</port>
+                                        </ports>
+                                        <cmd>
+                                            <shell>java -Dspring.profiles.active="docker" -jar \
+                                                /maven/${project.build.finalName}.jar server \
+                                                /maven/docker-config.yml
+                                            </shell>
+                                        </cmd>
+                                    </build>
+                                    <run>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <ports>
+                                            <port>${docker.port}:8080</port>
+                                        </ports>
+                                        <wait>
+                                            <http>
+                                                <url>http://${docker.host.address}:${docker.port}/v1/restaurants/1</url>
+                                            </http>
+                                            <time>5000</time>
+                                        </wait>
+                                        <log>
+                                            <prefix>${project.artifactId}</prefix>
+                                            <color>cyan</color>
+                                        </log>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                        <!-- Connect start/stop to pre- and
+                             post-integration-test phase, respectively if you want to start
+                             your docker containers during integration tests -->
+                        <executions>
+                            <execution>
+                               <id>start</id>
+                               <phase>pre-integration-test</phase>
+                               <goals>
+                                 <!-- "build" should be used to create the images with the artifact -->
+                                   <goal>build</goal>
+                                 <goal>start</goal>
+                               </goals>
+                            </execution>
+                            <execution>
+                               <id>stop</id>
+                               <phase>post-integration-test</phase>
+                               <goals>
+                                 <goal>stop</goal>
+                              </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

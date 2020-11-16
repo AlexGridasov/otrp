@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+  config:
+    image: 'localhost:5000/alex/config-server:1.0-SNAPSHOT'
+    ports:
+      - '8888:8888'

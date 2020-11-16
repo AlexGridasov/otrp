@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class BookingControllerIntegrationTests {
+public class BookingControllerIntegrationTest {
 
     //Required to Generate JSON content from Java objects
     public static final ObjectMapper objectMapper = new ObjectMapper();
