@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "60106855-7723-4efa-9cd9-57e2af07a16b",
+		"name": "otrp",
+		"description": "Online Table Reservation Platform\r\nhttps://github.com/AlexGridasov/otrp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user-service",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:2082/",
+					"host": [
+						"{{host}}"
+					],
+					"port": "2082",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-service docker",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:8082/",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8082",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-service docker - actuator/refresh",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:8082/actuator/refresh",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8082",
+					"path": [
+						"actuator",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-service docker - v1/user/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:8082/v1/user/1",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "eureka-server",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:8761/",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8761",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "config-service",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:8888/user-service/docker",
+					"host": [
+						"{{host}}"
+					],
+					"port": "8888",
+					"path": [
+						"user-service",
+						"docker"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
