@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "60106855-7723-4efa-9cd9-57e2af07a16b",
+		"_postman_id": "9d1f6f08-378e-458b-aa5c-0b772f6b0a9f",
 		"name": "otrp",
 		"description": "Online Table Reservation Platform\r\nhttps://github.com/AlexGridasov/otrp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -113,6 +113,25 @@
 					"path": [
 						"user-service",
 						"docker"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-service - 1/restaurants/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:7771/restaurants/1",
+					"host": [
+						"{{host}}"
+					],
+					"port": "7771",
+					"path": [
+						"restaurants",
+						"1"
 					]
 				}
 			},
