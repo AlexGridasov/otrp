@@ -1,6 +1,44 @@
 # otrp
 online table reservation system (OTRS)
 
+## Prometheus
+
+Install  
+https://hub.docker.com/r/prom/prometheus/
+
+Run 
+```
+docker run -d\
+    --name=prometheus \
+    -p 9090:9090 \
+    -v /path/to/otrs-api.yml:/etc/prometheus/prometheus.yml \
+    prom/prometheus
+```
+
+UI  
+http://localhost:9090
+
+## Graphana
+
+Download  
+https://grafana.com/grafana/download
+
+Run
+```
+docker run -d \
+    --name=grafana \
+    -p 3000:3000 \
+    grafana/grafana:7.3.3-ubuntu
+```
+
+UI  
+http://localhost:3000  
+admin@admin
+
+Import 
+OTRS API - Graph-1540540127247.json  
+Hystrix Dashboard-1540540111856
+
 ## Docker commands
 ```sh
 $ docker-compose up -d
