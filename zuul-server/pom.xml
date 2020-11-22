@@ -12,9 +12,15 @@
     </parent>
 
     <artifactId>zuul-server</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <start-class>com.gri.alex.zuul.server.EdgeApp</start-class>
+        <docker.registry.name>localhost:5000/</docker.registry.name>
+        <docker.repository.name>${docker.registry.name}alex/${project.artifactId}
+        </docker.repository.name>
+        <docker.host.address>localhost</docker.host.address>
+        <docker.port>8765</docker.port>
     </properties>
 
     <dependencies>
@@ -43,4 +49,60 @@
             <artifactId>jaxb-runtime</artifactId>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.34.1</version>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <images>
+                                <image>
+                                    <name>${docker.repository.name}:${project.version}</name>
+                                    <alias>${project.artifactId}</alias>
+                                    <build>
+                                        <from>openjdk:11-jre</from>
+                                        <maintainer>alex</maintainer>
+                                        <assembly>
+                                            <descriptor>docker-assembly.xml</descriptor>
+                                        </assembly>
+                                        <ports>
+                                            <port>${docker.port}</port>
+                                        </ports>
+                                        <cmd>
+                                            <shell>java -Dspring.profiles.active="docker" -jar \
+                                                /maven/${project.build.finalName}.jar server \
+                                                /maven/docker-config.yml
+                                            </shell>
+                                        </cmd>
+                                    </build>
+                                    <run>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <ports>
+                                            <port>${docker.port}:8765</port>
+                                        </ports>
+                                        <wait>
+                                            <http>
+                                                <url>http://${docker.host.address}:${docker.port}</url>
+                                            </http>
+                                            <time>5000</time>
+                                        </wait>
+                                        <log>
+                                            <prefix>${project.artifactId}</prefix>
+                                            <color>cyan</color>
+                                        </log>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

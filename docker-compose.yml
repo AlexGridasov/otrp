@@ -34,3 +34,17 @@ services:
     depends_on:
       - eureka
       - config
+
+  zuul:
+    image: localhost:5000/alex/zuul-server:1.0-SNAPSHOT
+    ports:
+      - "8765:8765"
+    links:
+      - eureka
+
+  api:
+    image: localhost:5000/alex/api-service:1.0-SNAPSHOT
+    ports:
+      - "7771:7771"
+    links:
+      - eureka

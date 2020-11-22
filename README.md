@@ -18,7 +18,7 @@ docker run -d\
 UI  
 http://localhost:9090
 
-## Graphana
+## Grafana
 
 Download  
 https://grafana.com/grafana/download
@@ -40,6 +40,7 @@ OTRS API - Graph-1540540127247.json
 Hystrix Dashboard-1540540111856
 
 ## Docker commands
+### docker-compose  
 ```sh
 $ docker-compose up -d
 ```
@@ -64,3 +65,9 @@ Options:
     -v, --volumes           Remove named volumes declared in the `volumes`
                             section of the Compose file and anonymous volumes
                             attached to containers.
+
+### docker
+```
+$ docker images
+```
+will show all top level images, their repository and tags, and their size.
