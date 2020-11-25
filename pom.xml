@@ -23,6 +23,8 @@
         <module>user-service</module>
         <module>config-server</module>
         <module>eureka-server</module>
+        <module>zuul-server</module>
+        <module>api-service</module>
     </modules>
 
     <properties>

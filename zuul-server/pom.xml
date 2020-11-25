@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+          http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>otrp</artifactId>
+        <groupId>com.gri.alex</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>zuul-server</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <start-class>com.gri.alex.zuul.server.EdgeApp</start-class>
+        <docker.registry.name>localhost:5000/</docker.registry.name>
+        <docker.repository.name>${docker.registry.name}alex/${project.artifactId}
+        </docker.repository.name>
+        <docker.host.address>localhost</docker.host.address>
+        <docker.port>8765</docker.port>
+    </properties>
+
+    <dependencies>
+        <!-- Metrics & Discovery client Dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+
+        <!-- JAXB and Java 11: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-with-Java-9-and-above -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.34.1</version>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <images>
+                                <image>
+                                    <name>${docker.repository.name}:${project.version}</name>
+                                    <alias>${project.artifactId}</alias>
+                                    <build>
+                                        <from>openjdk:11-jre</from>
+                                        <maintainer>alex</maintainer>
+                                        <assembly>
+                                            <descriptor>docker-assembly.xml</descriptor>
+                                        </assembly>
+                                        <ports>
+                                            <port>${docker.port}</port>
+                                        </ports>
+                                        <cmd>
+                                            <shell>java -Dspring.profiles.active="docker" -jar \
+                                                /maven/${project.build.finalName}.jar server \
+                                                /maven/docker-config.yml
+                                            </shell>
+                                        </cmd>
+                                    </build>
+                                    <run>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <ports>
+                                            <port>${docker.port}:8765</port>
+                                        </ports>
+                                        <wait>
+                                            <http>
+                                                <url>http://${docker.host.address}:${docker.port}</url>
+                                            </http>
+                                            <time>5000</time>
+                                        </wait>
+                                        <log>
+                                            <prefix>${project.artifactId}</prefix>
+                                            <color>cyan</color>
+                                        </log>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
