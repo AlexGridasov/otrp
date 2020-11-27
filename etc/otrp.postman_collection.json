@@ -7,6 +7,181 @@
 	},
 	"item": [
 		{
+			"name": "security",
+			"item": [
+				{
+					"name": "1 - security-service - authorization code grant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:9010/auth/oauth/authorize?response_type=code&client_id=client&redirect_uri=http://localhost:8765/&scope=apiAccess&state=1234",
+							"host": [
+								"{{host}}"
+							],
+							"port": "9010",
+							"path": [
+								"auth",
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "client_id",
+									"value": "client"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8765/"
+								},
+								{
+									"key": "scope",
+									"value": "apiAccess"
+								},
+								{
+									"key": "state",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - security-service - retrieve the access code",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "client",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "client",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "1rjVTp",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8765/",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}:9010/auth/oauth/token",
+							"host": [
+								"{{host}}"
+							],
+							"port": "9010",
+							"path": [
+								"auth",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edge-service - restaurantapi/v1/restaurants?name=o - with access token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "5f9f650d-634b-48e8-819f-0b88d2a9cb33",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:8765/restaurantapi/v1/restaurants?name=o",
+							"host": [
+								"{{host}}"
+							],
+							"port": "8765",
+							"path": [
+								"restaurantapi",
+								"v1",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "o"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edge-service - restaurantapi/v1/restaurants/1 - with access token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "5f9f650d-634b-48e8-819f-0b88d2a9cb33",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:8765/restaurantapi/v1/restaurants/1",
+							"host": [
+								"{{host}}"
+							],
+							"port": "8765",
+							"path": [
+								"restaurantapi",
+								"v1",
+								"restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "user-service",
 			"request": {
 				"method": "GET",
