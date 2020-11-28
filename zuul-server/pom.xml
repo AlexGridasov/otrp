@@ -39,6 +39,15 @@
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+
         <!-- JAXB and Java 11: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-with-Java-9-and-above -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

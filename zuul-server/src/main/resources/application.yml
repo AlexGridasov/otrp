@@ -12,7 +12,12 @@ endpoints:
 
 zuul:
   ignoredServices: "*"
+  sensitiveHeaders:
   routes:
+    authapi:
+      path: /authapi/**
+      serviceId: security-service
+      stripPrefix: true
     restaurantapi:
       path: /restaurantapi/**
       serviceId: restaurant-service
@@ -22,6 +27,25 @@ server:
   port: 8765
   compression:
     enabled: true
+
+security:
+  user:
+    password: password
+  oauth2:
+    client:
+      clientId: client
+      clientSecret: secret123
+      scope: apiAccess
+      accessTokenUri: http://localhost:9010/auth/oauth/token
+      userAuthorizationUri: http://localhost:9010/auth/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      filter-order: 3
+      #      tokenInfoUri: http://localhost:9010/auth/oauth/check_token
+      userInfoUri: http://localhost:9010/auth/me
+      #      preferTokenInfo: false
+  sessions: ALWAYS
+
 
 hystrix:
   threadpool:
