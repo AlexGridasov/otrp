@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9d1f6f08-378e-458b-aa5c-0b772f6b0a9f",
+		"_postman_id": "2d730397-0098-4451-a802-c278370bf43e",
 		"name": "otrp",
 		"description": "Online Table Reservation Platform\r\nhttps://github.com/AlexGridasov/otrp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -52,6 +52,63 @@
 					"response": []
 				},
 				{
+					"name": "1a - security-service - authorization code grant - implicit",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:9010/auth/oauth/authorize?response_type=token&client_id=client&redirect_uri=http://localhost:8765/&scope=apiAccess&state=553344",
+							"host": [
+								"{{host}}"
+							],
+							"port": "9010",
+							"path": [
+								"auth",
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "response_type",
+									"value": "token"
+								},
+								{
+									"key": "client_id",
+									"value": "client"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8765/"
+								},
+								{
+									"key": "scope",
+									"value": "apiAccess"
+								},
+								{
+									"key": "state",
+									"value": "553344"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "2 - security-service - retrieve the access code",
 					"request": {
 						"auth": {
@@ -92,6 +149,121 @@
 								{
 									"key": "redirect_uri",
 									"value": "http://localhost:8765/",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}:9010/auth/oauth/token",
+							"host": [
+								"{{host}}"
+							],
+							"port": "9010",
+							"path": [
+								"auth",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2a - security-service - resource owner password credential grant",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "client",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "apiAccess",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "client",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}:9010/auth/oauth/token",
+							"host": [
+								"{{host}}"
+							],
+							"port": "9010",
+							"path": [
+								"auth",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2b - security-service - client credentials grant",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "client",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "apiAccess",
 									"type": "text"
 								}
 							]
