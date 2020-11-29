@@ -4,12 +4,15 @@ spring:
     name: booking-service  # Service registers under this name
   messages:
     fallback-to-system-locale: false
+  output:
+    ansi:
+      enabled: ALWAYS
 
 # Discovery Server Access
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 3
-    leaseExpirationDurationInSeconds: 5
+    leaseExpirationDurationInSeconds: 2
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
 
