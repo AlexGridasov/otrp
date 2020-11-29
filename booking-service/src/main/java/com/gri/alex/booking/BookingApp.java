@@ -1,5 +1,6 @@
 package com.gri.alex.booking;
 
+import com.gri.alex.booking.common.resttemplate.UserRestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,3 +47,27 @@ class DiscoveryClientSample implements CommandLineRunner {
     }
 }
 
+@Component
+@ConditionalOnProperty(prefix = "command.autorun", name = "enabled",
+        havingValue = "true", matchIfMissing = true)
+class RestTemplateSample implements CommandLineRunner {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RestTemplateSample.class);
+
+    @Autowired
+    private UserRestTemplate userRestTemplate;
+
+    @Override
+    public void run(String... strings) throws Exception {
+        LOG.info("Creating new user");
+        userRestTemplate.postUser();
+        LOG.info("\n\nUpdate newly created user");
+        userRestTemplate.putUser();
+        LOG.info("\n\nRetrieve users again to check if newly created object got updated");
+        userRestTemplate.getUser();
+        LOG.info("\n\nDelete newly created user");
+        userRestTemplate.deleteUser();
+        LOG.info("\n\nRetrieve users again to check if deleted user still exists");
+        userRestTemplate.getUser();
+    }
+}
