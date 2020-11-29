@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @EnableFeignClients
@@ -26,6 +27,7 @@ public class BookingApp {
     }
 }
 
+@Profile("!test")
 @Component
 @ConditionalOnProperty(prefix = "command.autorun", name = "enabled",
         havingValue = "true", matchIfMissing = true)
@@ -40,18 +42,20 @@ class DiscoveryClientSample implements CommandLineRunner {
     public void run(String... strings) {
         final String serviceName = "restaurant-service";
 
-        LOG.info("\n{}",discoveryClient.description());
+        LOG.info("\n{}", discoveryClient.description());
         // Get restaurant-service instances and prints its info
-        discoveryClient.getInstances(serviceName).forEach(serviceInstance -> {
-            LOG.info("\nInstance --> {}\nServer: {}\nPort: {}\nURI: {}\n\n",
-                    serviceInstance.getServiceId(),
-                    serviceInstance.getHost(),
-                    serviceInstance.getPort(),
-                    serviceInstance.getUri());
-        });
+        discoveryClient.getInstances(serviceName).forEach(si ->
+                LOG.info("\nInstance --> {}\nServer: {}\nPort: {}\nURI: {}\n\n",
+                        si.getServiceId(),
+                        si.getHost(),
+                        si.getPort(),
+                        si.getUri()
+                )
+        );
     }
 }
 
+@Profile("!test")
 @Component
 @ConditionalOnProperty(prefix = "command.autorun", name = "enabled",
         havingValue = "true", matchIfMissing = true)
@@ -77,6 +81,7 @@ class RestTemplateSample implements CommandLineRunner {
     }
 }
 
+@Profile("!test")
 @Component
 @ConditionalOnProperty(prefix = "command.autorun", name = "enabled",
         havingValue = "true", matchIfMissing = true)
@@ -107,6 +112,7 @@ class Java11HttpClientSample implements CommandLineRunner {
     }
 }
 
+@Profile("!test")
 @Component
 @ConditionalOnProperty(prefix = "command.autorun", name = "enabled",
         havingValue = "true", matchIfMissing = true)
