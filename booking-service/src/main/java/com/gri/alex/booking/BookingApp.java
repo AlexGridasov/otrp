@@ -1,5 +1,6 @@
 package com.gri.alex.booking;
 
+import com.gri.alex.booking.common.httpclient.UserRestClient;
 import com.gri.alex.booking.common.resttemplate.UserRestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,5 +70,35 @@ class RestTemplateSample implements CommandLineRunner {
         userRestTemplate.deleteUser();
         LOG.info("\n\nRetrieve users again to check if deleted user still exists");
         userRestTemplate.getUser();
+    }
+}
+
+@Component
+@ConditionalOnProperty(prefix = "command.autorun", name = "enabled",
+        havingValue = "true", matchIfMissing = true)
+class Java11HttpClientSample implements CommandLineRunner {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Java11HttpClientSample.class);
+
+    // Java 11 HttpClient for calling User REST endpoints
+    @Autowired
+    private UserRestClient httpClient;
+
+    @Override
+    public void run(String... strings) throws Exception {
+        LOG.info("Creating new user");
+        httpClient.postUser();
+        LOG.info("\n\nUpdate newly created user");
+        httpClient.putUser();
+        LOG.info("\n\nRetrieve users");
+        httpClient.getUser();
+        LOG.info("\n\nPatch updated user");
+        httpClient.patchUser();
+        LOG.info("\n\nRetrieve patched user");
+        httpClient.getUser();
+        LOG.info("\n\nDelete newly created users");
+        httpClient.deleteUser();
+        LOG.info("\n\nRetrieve user again to check if deleted user still exists");
+        httpClient.getUser();
     }
 }
