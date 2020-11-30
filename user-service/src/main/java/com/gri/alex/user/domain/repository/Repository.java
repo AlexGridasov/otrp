@@ -6,5 +6,5 @@ public interface Repository<TE, T> extends ReadOnlyRepository<TE, T> {
 
     void remove(T id);
 
-    void update(TE entity);
+    void update(T id, TE entity);
 }

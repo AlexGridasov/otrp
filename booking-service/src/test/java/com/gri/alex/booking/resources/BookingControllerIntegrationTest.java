@@ -14,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class BookingControllerIntegrationTest {
 
     //Required to Generate JSON content from Java objects
@@ -137,8 +139,8 @@ public class BookingControllerIntegrationTest {
         HttpEntity<String> entity = new HttpEntity<>(objectMapper.writeValueAsString(requestBody), headers);
 
         ResponseEntity<Map> responseE = restTemplate
-                .exchange("http://localhost:" + port + "/v1/booking", HttpMethod.POST, entity, Map.class,
-                        Collections.EMPTY_MAP);
+                .exchange("http://localhost:" + port + "/v1/booking",
+                        HttpMethod.POST, entity, Map.class, Collections.EMPTY_MAP);
 
         assertNotNull(responseE);
 
@@ -146,8 +148,8 @@ public class BookingControllerIntegrationTest {
         assertEquals(HttpStatus.CREATED, responseE.getStatusCode());
 
         //validating the newly created booking using API call
-        Map<String, Object> response
-                = restTemplate.getForObject("http://localhost:" + port + "/v1/booking/3", Map.class);
+        Map<String, Object> response = restTemplate
+                .getForObject("http://localhost:" + port + "/v1/booking/3", Map.class);
 
         assertNotNull(response);
 
