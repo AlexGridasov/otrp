@@ -55,7 +55,7 @@ public class InMemUserRepository implements UserRepository<User, String> {
     }
 
     @Override
-    public void update(User entity) {
+    public void update(String id, User entity) {
         if (entities.containsKey(entity.getId())) {
             entities.put(entity.getId(), entity);
         }

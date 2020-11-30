@@ -14,7 +14,7 @@
     <artifactId>security-service</artifactId>
 
     <properties>
-        <start-class>com.packtpub.mmj.security.service.SecurityApp</start-class>
+        <start-class>com.gri.alex.security.service.SecurityApp</start-class>
     </properties>
 
     <dependencies>

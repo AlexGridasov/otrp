@@ -2,7 +2,6 @@ package com.gri.alex.user.domain.service;
 
 import com.gri.alex.user.common.DuplicateUserException;
 import com.gri.alex.user.common.InvalidUserException;
-import com.gri.alex.user.domain.model.entity.Entity;
 import com.gri.alex.user.domain.model.entity.User;
 import com.gri.alex.user.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +41,11 @@ public class UserServiceImpl extends BaseService<User, String>
         return userRepository.findByName(name);
     }
 
-    @Override
-    public void update(User user) {
-        userRepository.update(user);
-    }
+
+  @Override
+  public void update(String id, User user) throws Exception {
+    userRepository.update(id, user);
+  }
 
     @Override
     public void delete(String id) {
@@ -53,7 +53,7 @@ public class UserServiceImpl extends BaseService<User, String>
     }
 
     @Override
-    public Entity<String> findById(String id) {
+    public User findById(String id) {
         return userRepository.get(id);
     }
 
